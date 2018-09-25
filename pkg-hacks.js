@@ -515,6 +515,13 @@ var hackers = [
     }
   },
   {
+    name: 'web3-providers-http',
+    regex: [/\/src\/index\.js$/],
+    hack: function (file, contents) {
+      return contents.replace("var XHR2 = require('xhr2-cookies').XMLHttpRequest", "var XHR2 = XMLHttpRequest || window.XMLHttpRequest")
+    }
+  },
+  {
     name: 'version',
     regex: [/pbkdf2/],
     hack: function (file, contents) {
