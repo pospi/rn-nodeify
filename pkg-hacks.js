@@ -515,6 +515,23 @@ var hackers = [
     }
   },
   {
+    name: 'http-browserify',
+    regex: [/\/lib\/response\.js$/],
+    hack: function (file, contents) {
+      return contents.replace(
+        `if (res.readyState === 4) {
+        if (!this.statusCode) {
+            this.statusCode = res.status;
+            this.emit('ready');`,
+        `if (res.readyState === 4) {
+        if (!this.statusCode) {
+            this.statusCode = res.status;
+            this.headers = parseHeaders(res);
+            this.emit('ready');`
+      )
+    }
+  },
+  {
     name: 'version',
     regex: [/pbkdf2/],
     hack: function (file, contents) {
